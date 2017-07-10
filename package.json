@@ -1,0 +1,20 @@
+{
+  "name": "Qreator",
+  "version": "1.0.0",
+  "description": "QReator: A webapp for small business owners who want to create QR codes for their online products.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kiptong/Qreator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kiptong/Qreator/issues"
+  },
+  "homepage": "https://github.com/Kiptong/Qreator#readme"
+}
