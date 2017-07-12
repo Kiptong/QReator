@@ -11,15 +11,22 @@ qrButton.addEventListener('click', () => {
   }
   fetch('/qrrequest', {
     method: 'POST',
+    headers: {
+      'content-type': 'application/json'
+    },
     body: JSON.stringify(qrrequest)
   })
-    .then((res) => console.log(res))
+    .then(res => res.json())
+    .then(data => {
+      const qr = document.getElementById('picture')
+      qr.setAttribute('src', data.qr)
+    })
     .catch((res) => console.log(res))
 })
 
-fetch('/sample')
-  .then(res => res.json())
-  .then(data => {
-    const qr = document.getElementById('picture')
-    qr.setAttribute('src', data.qr)
-  })
+// fetch('/sample')
+//   .then(res => res.json())
+//   .then(data => {
+//     const qr = document.getElementById('picture')
+//     qr.setAttribute('src', data.qr)
+//   })
