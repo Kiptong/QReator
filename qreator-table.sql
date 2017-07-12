@@ -1,8 +1,8 @@
-DROP TABLE IF EXISTS qr;
+DROP TABLE IF EXISTS qrcodes;
 
 CREATE TABLE qrcodes (
-  id         nameInput,
-  url        urlInput,
-  name       nameInput,
-  description descripInput
+  url        text,
+  name       text,
+  description text,
+  qr          text
 );
