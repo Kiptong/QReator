@@ -9,7 +9,8 @@ qrButton.addEventListener('click', () => {
     name: nameInput,
     description: descripInput
   }
-  fetch('/qrrequest', {
+
+  fetch('/generate', {
     method: 'POST',
     headers: {
       'content-type': 'application/json'
@@ -17,16 +18,9 @@ qrButton.addEventListener('click', () => {
     body: JSON.stringify(qrrequest)
   })
     .then(res => res.json())
-    .then(data => {
-      const qr = document.getElementById('picture')
-      qr.setAttribute('src', data.qr)
-    })
+      .then(data => {
+        const qr = document.getElementById('picture')
+        qr.setAttribute('src', data.qr)
+      })
     .catch((res) => console.log(res))
 })
-
-// fetch('/sample')
-//   .then(res => res.json())
-//   .then(data => {
-//     const qr = document.getElementById('picture')
-//     qr.setAttribute('src', data.qr)
-//   })

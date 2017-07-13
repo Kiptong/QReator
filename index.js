@@ -12,18 +12,19 @@ const app = express()
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.json())
 
-app.post('/qrrequest', (req, res) => {
+app.post('/generate', (req, res) => {
   QRcode.toDataURL(req.body.url, {scale: 25}, (err, url) => {
-    console.log(url)
     if (err) throw console.error(err)
-    const qr = {qr: url}
-    req.body.qr = url
+    const qrCode = req.body
+    qrCode.qr = url
     const query = knex
       .insert(req.body)
       .into('qrcodes')
+
     query.then(() => console.log('done!'))
       .catch((err) => console.log(err))
-    res.json(qr)
+
+    res.json(qrCode)
   })
 })
 
