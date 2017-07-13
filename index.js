@@ -28,6 +28,10 @@ app.post('/generate', (req, res) => {
   })
 })
 
+app.get('/qrcards', (req, res) => {
+  console.log('herd that')
+})
+
 app.listen('3000', () => {
   console.log('Listening on 3000.')
 })
