@@ -15,7 +15,7 @@ qrButton.addEventListener('click', () => {
     headers: {
       'content-type': 'application/json'
     },
-    body: JSON.stringify(qrrequest)
+    body: JSON.stringify(qrCode)
   })
     .then(res => res.json())
       .then(data => {
