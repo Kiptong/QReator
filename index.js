@@ -13,7 +13,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.json())
 
 app.post('/qrrequest', (req, res) => {
-  QRcode.toDataURL(req.body.url, {}, (err, url) => {
+  QRcode.toDataURL(req.body.url, {scale: 25}, (err, url) => {
     console.log(url)
     if (err) throw console.error(err)
     const qr = {qr: url}
