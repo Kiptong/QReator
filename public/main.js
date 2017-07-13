@@ -4,7 +4,7 @@ qrButton.addEventListener('click', () => {
   const urlInput = document.getElementById('qrurlinput').value
   const nameInput = document.getElementById('qrnameinput').value
   const descripInput = document.getElementById('qrdescripinput').value
-  const qrrequest = {
+  const qrCode = {
     url: urlInput,
     name: nameInput,
     description: descripInput
