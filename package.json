@@ -1,0 +1,43 @@
+{
+  "name": "Qreator",
+  "version": "1.0.0",
+  "description": "QReator: A webapp for small business owners who want to create QR codes for their online products.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kiptong/Qreator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kiptong/Qreator/issues"
+  },
+  "homepage": "https://github.com/Kiptong/Qreator#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "knex": "^0.13.0",
+    "pg": "^6.4.0",
+    "qrcode": "^0.8.2"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-standard": "10.2.1",
+    "eslint-plugin-import": "2.3.0",
+    "eslint-plugin-node": "4.2.2",
+    "eslint-plugin-promise": "3.5.0",
+    "eslint-plugin-react": "7.0.1",
+    "eslint-plugin-standard": "3.0.1",
+    "htmlhint": "0.9.13",
+    "husky": "0.13.4",
+    "nodemon": "^1.11.0",
+    "npm-run-all": "4.0.2",
+    "stylelint": "7.10.1",
+    "stylelint-config-standard": "16.0.0"
+  }
+}

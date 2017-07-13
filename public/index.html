@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>QReator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="styles.css"/>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="navbar navbar-light bg-faded">
+        <h2>QReator</h2>
+      </nav>
+      <hr/>
+      <header class="col-sm-offset-4">
+        <h4>Create Your Personal QR Code</h4>
+      </header>
+      <hr/>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+          <form>
+            <div class="form-group">
+              <label for="formQrUrl">Where would you like your QR code to go?</label>
+              <input type="text" class="form-control" id="qrurlinput" placeholder="ex. www.google.com"/>
+              <hr/>
+              <label for="formQrUrl">What would you like to name your QR code?</label>
+              <input type="text" class="form-control" id="qrnameinput" placeholder="ex. coffee mug"/>
+              <hr/>
+              <label for="formQrUrl">Want to add a description for your refrence?(optional)</label>
+              <input type="text" class="form-control" id="qrdescripinput" placeholder="ex. #1 Dad Coffee Mug"/>
+            </div>
+          </form>
+          <hr/>
+          <button class="btn btn-primary btn-large btn-block" type="button" name="Create QR Code" id="createqr">Create QR Code</button>
+        </div>
+        <div class="col-sm-6">
+          <div class="well col-sm-8 col-sm-offset-2">
+            <img id="picture" class="img-responsive" src="images/qr.png" alt=""/>
+          </div>
+        </div>
+      </div>
+      <hr/>
+    </div>
+  <script type="text/javascript" src="main.js"></script>
+  </body>
+</html>
