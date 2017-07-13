@@ -18,7 +18,7 @@ app.post('/generate', (req, res) => {
     const qrCode = req.body
     qrCode.qr = url
     const query = knex
-      .insert(req.body)
+      .insert(qrCode)
       .into('qrcodes')
 
     query.then(() => console.log('done!'))
