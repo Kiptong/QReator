@@ -1,5 +1,22 @@
 const qrButton = document.getElementById('createqr')
 
+function cardHeader() {
+  const $cardHeaderCol = document.createElement('div')
+  const $cardHeader = document.createElement('h4')
+  const $cardHeaderHr = document.createElement('hr')
+
+  $cardHeaderCol.setAttribute('class', 'col-sm-12 text-center')
+
+  $cardHeader.textContent = 'Your Created QR Codes'
+
+  $cardHeaderCol.append($cardHeader)
+  $cardHeaderCol.append($cardHeaderHr)
+
+  const $cardContainer = document.getElementById('cardcontainer')
+
+  $cardContainer.append($cardHeaderCol)
+}
+
 function createCard(data) {
   const $qrCodeDiv = document.createElement('div')
   const $qrCode = document.createElement('img')
@@ -24,6 +41,7 @@ window.onload = () => {
   fetch('/qrcards')
     .then(res => res.json())
       .then(data => {
+        cardHeader()
         data.forEach((data) => createCard(data))
       })
     .catch((err) => console.log(err))
@@ -51,6 +69,7 @@ qrButton.addEventListener('click', () => {
         const qr = document.getElementById('picture')
         qr.setAttribute('src', data.qr)
         createCard(data)
+        window.location.reload(true)
       })
     .catch((res) => console.log(res))
 })
