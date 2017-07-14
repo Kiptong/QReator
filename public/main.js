@@ -2,7 +2,6 @@ const qrButton = document.getElementById('createqr')
 
 function createCard(data) {
   const $qrCodeDiv = document.createElement('div')
-  const $qrImgDiv = document.createElement('div')
   const $qrCode = document.createElement('img')
   const $name = document.createElement('h3')
 
@@ -25,9 +24,9 @@ window.onload = () => {
   fetch('/qrcards')
     .then(res => res.json())
       .then(data => {
-        createCard(data)
+        data.forEach((data) => createCard(data))
       })
-    .catch((res) => console.log(res))
+    .catch((err) => console.log(err))
 }
 
 qrButton.addEventListener('click', () => {

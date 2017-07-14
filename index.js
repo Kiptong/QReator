@@ -29,7 +29,10 @@ app.post('/generate', (req, res) => {
 })
 
 app.get('/qrcards', (req, res) => {
-  console.log('herd that')
+  const cardQuery = knex.select().table('qrcodes')
+
+  cardQuery.then((data) => res.json(data))
+    .catch((err) => console.log(err))
 })
 
 app.listen('3000', () => {
