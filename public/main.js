@@ -16,9 +16,28 @@ function createCard(data) {
   $qrCodeDiv.appendChild($qrCode)
   $qrCodeDiv.appendChild($name)
 
-  $qrCode.addEventListener('click', () => console.log(data.id))
+  $qrCode.addEventListener('click', () => editQr(data))
 
   return $qrCodeDiv
+}
+
+function editQr(data) {
+  const $qreatorHeader = document.getElementById('qreatorheader')
+  const $createQrView = document.getElementById('createqrcode')
+  const $editQrView = document.getElementById('editqrcode')
+  const $updatedqrurl = document.getElementById('updatedqrurl')
+  const $updatedqrname = document.getElementById('updatedqrname')
+  const $updatedqrdescrip = document.getElementById('updatedqrdescrip')
+  const $qrEditView = document.getElementById('qreditview')
+
+  $qreatorHeader.textContent = 'Edit QR Code: ' + data.name
+
+  $createQrView.setAttribute('class', 'hidden')
+  $editQrView.removeAttribute('class', 'hidden')
+  $qrEditView.setAttribute('src', data.qr)
+  $updatedqrurl.setAttribute('placeholder', data.url)
+  $updatedqrname.setAttribute('placeholder', data.name)
+  $updatedqrdescrip.setAttribute('placeholder', data.description)
 }
 
 window.onload = () => {

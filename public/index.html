@@ -13,12 +13,12 @@
       </nav>
       <hr/>
       <header class="col-sm-12 text-center">
-        <h3>Create Your Custom QR Code</h3>
-        <hr/>
+        <h3 id="qreatorheader">Create Your Custom QR Code</h3>
+      <hr/>
       </header>
     </div>
     <div class="container">
-      <div class="row">
+      <div id="createqrcode" class="row">
         <div class="col-sm-6">
           <form>
             <div class="form-group">
@@ -41,8 +41,31 @@
           </div>
         </div>
       </div>
-      <hr/>
+      <div id="editqrcode" class="row hidden">
+        <div class="col-sm-6">
+          <form>
+            <div class="form-group">
+              <label for="formQrUrl">Would you like to change your QR destination?</label>
+              <input type="text" class="form-control" id="updatedqrurl" placeholder="ex. www.google.com"/>
+              <hr/>
+              <label for="formQrUrl">What would you like to change your QR name?</label>
+              <input type="text" class="form-control" id="updatedqrname" placeholder="ex. coffee mug"/>
+              <hr/>
+              <label for="formQrUrl">Would you like add a description or update your current description?(optional)</label>
+              <input type="text" class="form-control" id="updatedqrdescrip" placeholder="ex. #1 Dad Coffee Mug"/>
+            </div>
+          </form>
+          <hr/>
+          <button class="btn btn-primary btn-large btn-block" type="button" name="Create QR Code" id="updatedqrchanges">Save Changes</button>
+        </div>
+        <div class="col-sm-6">
+          <div class="well col-sm-8 col-sm-offset-2">
+            <img id="qreditview" class="img-responsive" src="" alt=""/>
+          </div>
+        </div>
+      </div>
     </div>
+    <hr/>
     <div class="container">
       <div id="cardheader" class="row hidden">
         <div class="col-sm-12 text-center">
