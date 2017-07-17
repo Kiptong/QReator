@@ -16,6 +16,8 @@ function createCard(data) {
   $qrCodeDiv.appendChild($qrCode)
   $qrCodeDiv.appendChild($name)
 
+  $qrCode.addEventListener('click', () => console.log(data.id))
+
   return $qrCodeDiv
 }
 
