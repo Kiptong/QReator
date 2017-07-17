@@ -31,8 +31,9 @@ app.post('/generate', (req, res) => {
 app.get('/qrcards', (req, res) => {
   const cardQuery = knex.select().table('qrcodes')
 
-  cardQuery.then((data) => res.json(data))
-    .catch((err) => console.log(err))
+  cardQuery
+    .then((data) => res.json(data))
+    .catch((err) => res.status(500).json({error: 'Error in creating QR card.'}))
 })
 
 app.listen('3000', () => {

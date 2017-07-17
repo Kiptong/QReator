@@ -16,22 +16,22 @@ function createCard(data) {
   $qrCodeDiv.appendChild($qrCode)
   $qrCodeDiv.appendChild($name)
 
-  const $cardRow = document.getElementById('cardrow')
-  $cardRow.appendChild($qrCodeDiv)
+  return $qrCodeDiv
 }
 
 window.onload = () => {
   fetch('/qrcards')
     .then(res => res.json())
-      .then(data => {
-        data.forEach((data) => {
-          createCard(data)
-        })
-        if (data.length > 0) {
-          const $cardHeader = document.getElementById('cardheader')
-          $cardHeader.classList.remove('hidden')
-        }
+    .then(data => {
+      data.forEach((data) => {
+        const $cardRow = document.getElementById('cardrow')
+        $cardRow.appendChild(createCard(data))
       })
+      if (data.length > 0) {
+        const $cardHeader = document.getElementById('cardheader')
+        $cardHeader.classList.remove('hidden')
+      }
+    })
     .catch((err) => console.log(err))
 }
 
@@ -57,7 +57,8 @@ qrButton.addEventListener('click', () => {
         $cardHeader.classList.remove('hidden')
         const qr = document.getElementById('picture')
         qr.setAttribute('src', data.qr)
-        createCard(data)
+        const $cardRow = document.getElementById('cardrow')
+        $cardRow.appendChild(createCard(data))
       })
     .catch((res) => console.log(res))
 })
