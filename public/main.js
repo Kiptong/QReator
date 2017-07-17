@@ -23,8 +23,8 @@ window.onload = () => {
   fetch('/qrcards')
     .then(res => res.json())
     .then(data => {
+      const $cardRow = document.getElementById('cardrow')
       data.forEach((data) => {
-        const $cardRow = document.getElementById('cardrow')
         $cardRow.appendChild(createCard(data))
       })
       if (data.length > 0) {
