@@ -29,20 +29,19 @@ app.post('/generate', (req, res) => {
 })
 
 app.put('/qrcards/:id', (req, res) => {
-  console.log(req.body)
   QRcode.toDataURL(req.body.url, {scale: 25}, (err, url) => {
     if (err) throw console.error(err)
     const qrCode = req.body
     qrCode.qr = url
-    console.log(req.params.id)
     const query = knex('qrcodes')
       .where('id', '=', req.params.id)
       .update(qrCode)
+      .returning('*')
 
-    query.then(() => console.log('done!'))
+    query.then((data) => {
+      res.json(data)
+    })
       .catch((err) => console.log(err))
-
-    res.json(qrCode)
   })
 })
 

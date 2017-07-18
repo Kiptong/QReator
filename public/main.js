@@ -18,6 +18,21 @@ function qreator() {
     .catch((err) => console.log(err))
 }
 
+function updateCard() {
+  const $cardRow = document.getElementById('cardrow')
+  const $createQrView = document.getElementById('createqrcode')
+  const $editQrView = document.getElementById('editqrcode')
+  const $qreatorHeader = document.getElementById('qreatorheader')
+
+  $qreatorHeader.textContent = 'Create Your Custom QR Code'
+
+  $editQrView.setAttribute('class', 'hidden')
+  $createQrView.removeAttribute('class', 'hidden')
+
+  $cardRow.innerHTML = ''
+  qreator()
+}
+
 function createCard(data) {
   const $qrCodeDiv = document.createElement('div')
   const $qrCode = document.createElement('img')
@@ -26,7 +41,7 @@ function createCard(data) {
   $qrCode.setAttribute('src', data.qr)
   $qrCode.setAttribute('class', 'img-thumbnail')
   $qrCodeDiv.setAttribute('class', 'col-xs-3')
-  $qrCode.setAttribute('id', data.id)
+  $qrCodeDiv.setAttribute('id', data.id)
 
   $name.setAttribute('class', 'text-center')
   $name.textContent = data.name
@@ -58,11 +73,10 @@ function editQr(data) {
   $updatedqrname.value = data.name
   $updatedqrdescrip.value = data.description
 
-  $saveChanges.addEventListener('click', () => updateQRData(data))
+  $saveChanges.setAttribute('data-id', data.id)
 }
 
-function updateQRData(data) {
-
+function updateQRData(id) {
   const urlInput = document.getElementById('updatedqrurl')
   const nameInput = document.getElementById('updatedqrname')
   const descripInput = document.getElementById('updatedqrdescrip')
@@ -73,7 +87,7 @@ function updateQRData(data) {
     description: descripInput.value
   }
 
-  fetch('/qrcards/' + data.id, {
+  fetch('/qrcards/' + id, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -82,10 +96,13 @@ function updateQRData(data) {
   })
     .then(res => res.json())
       .then((data) => {
-        window.location.reload()
+        updateCard()
       })
     .catch((res) => console.log(res))
 }
+
+const $saveChanges = document.getElementById('savechanges')
+$saveChanges.addEventListener('click', (event) => updateQRData(event.target.dataset.id))
 
 qrButton.addEventListener('click', () => {
   const urlInput = document.getElementById('qrurlinput').value
