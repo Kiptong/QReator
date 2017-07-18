@@ -1,5 +1,23 @@
 const qrButton = document.getElementById('createqr')
 
+window.onload = qreator()
+
+function qreator() {
+  fetch('/qrcards')
+    .then(res => res.json())
+    .then(data => {
+      const $cardRow = document.getElementById('cardrow')
+      data.forEach((data) => {
+        $cardRow.appendChild(createCard(data))
+      })
+      if (data.length > 0) {
+        const $cardHeader = document.getElementById('cardheader')
+        $cardHeader.classList.remove('hidden')
+      }
+    })
+    .catch((err) => console.log(err))
+}
+
 function createCard(data) {
   const $qrCodeDiv = document.createElement('div')
   const $qrCode = document.createElement('img')
@@ -29,31 +47,44 @@ function editQr(data) {
   const $updatedqrname = document.getElementById('updatedqrname')
   const $updatedqrdescrip = document.getElementById('updatedqrdescrip')
   const $qrEditView = document.getElementById('qreditview')
+  const $saveChanges = document.getElementById('savechanges')
 
   $qreatorHeader.textContent = 'Edit QR Code: ' + data.name
 
   $createQrView.setAttribute('class', 'hidden')
   $editQrView.removeAttribute('class', 'hidden')
   $qrEditView.setAttribute('src', data.qr)
-  $updatedqrurl.setAttribute('placeholder', data.url)
-  $updatedqrname.setAttribute('placeholder', data.name)
-  $updatedqrdescrip.setAttribute('placeholder', data.description)
+  $updatedqrurl.value = data.url
+  $updatedqrname.value = data.name
+  $updatedqrdescrip.value = data.description
+
+  $saveChanges.addEventListener('click', () => updateQRData(data))
 }
 
-window.onload = () => {
-  fetch('/qrcards')
+function updateQRData(data) {
+
+  const urlInput = document.getElementById('updatedqrurl')
+  const nameInput = document.getElementById('updatedqrname')
+  const descripInput = document.getElementById('updatedqrdescrip')
+
+  const qrUpdate = {
+    url: urlInput.value,
+    name: nameInput.value,
+    description: descripInput.value
+  }
+
+  fetch('/qrcards/' + data.id, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(qrUpdate)
+  })
     .then(res => res.json())
-    .then(data => {
-      const $cardRow = document.getElementById('cardrow')
-      data.forEach((data) => {
-        $cardRow.appendChild(createCard(data))
+      .then((data) => {
+        window.location.reload()
       })
-      if (data.length > 0) {
-        const $cardHeader = document.getElementById('cardheader')
-        $cardHeader.classList.remove('hidden')
-      }
-    })
-    .catch((err) => console.log(err))
+    .catch((res) => console.log(res))
 }
 
 qrButton.addEventListener('click', () => {

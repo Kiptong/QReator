@@ -28,6 +28,24 @@ app.post('/generate', (req, res) => {
   })
 })
 
+app.put('/qrcards/:id', (req, res) => {
+  console.log(req.body)
+  QRcode.toDataURL(req.body.url, {scale: 25}, (err, url) => {
+    if (err) throw console.error(err)
+    const qrCode = req.body
+    qrCode.qr = url
+    console.log(req.params.id)
+    const query = knex('qrcodes')
+      .where('id', '=', req.params.id)
+      .update(qrCode)
+
+    query.then(() => console.log('done!'))
+      .catch((err) => console.log(err))
+
+    res.json(qrCode)
+  })
+})
+
 app.get('/qrcards', (req, res) => {
   const cardQuery = knex.select().table('qrcodes')
 
