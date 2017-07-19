@@ -105,7 +105,7 @@ function updateQRData(id) {
 
 function deleteQRCode(id) {
   const qrCodeId = {id}
-  fetch('/deleteqr/' + id, {
+  fetch('/qrcards/' + id, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json'
@@ -137,17 +137,24 @@ qrButton.addEventListener('click', () => {
   fetch('/generate', {
     method: 'POST',
     headers: {
-      'content-type': 'application/json'
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify(qrCode)
   })
     .then(res => res.json())
       .then(data => {
+        const qrData = data
+        console.log(qrData)
         const $cardHeader = document.getElementById('cardheader')
-        $cardHeader.classList.remove('hidden')
+        const $cardRow = document.getElementById('cardrow')
         const qr = document.getElementById('picture')
-        qr.setAttribute('src', data.qr)
-        updateQRCardRow()
+
+        $cardHeader.classList.remove('hidden')
+
+        data.forEach((data) => {
+          qr.setAttribute('src', data.qr)
+          $cardRow.appendChild(createCard(data))
+        })
       })
     .catch((res) => console.log(res))
 })
