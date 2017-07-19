@@ -61,6 +61,7 @@ function editQr(data) {
   const $updatedqrdescrip = document.getElementById('updated-qr-description')
   const $qrEditView = document.getElementById('qreditview')
   const $saveChanges = document.getElementById('savechanges')
+  const $deleteQR = document.getElementById('delete-qr')
 
   $qreatorHeader.textContent = 'Edit QR Code: ' + data.name
 
@@ -72,6 +73,7 @@ function editQr(data) {
   $updatedqrdescrip.value = data.description
 
   $saveChanges.setAttribute('data-id', data.id)
+  $deleteQR.setAttribute('data-id', data.id)
 }
 
 function updateQRData(id) {
@@ -96,6 +98,13 @@ function updateQRData(id) {
     .then((data) => updateQRCardRow())
     .catch((res) => console.log(res))
 }
+
+function deleteQRCode(id) {
+  console.log(id)
+}
+
+const $deleteQR = document.getElementById('delete-qr')
+$deleteQR.addEventListener('click', (event) => deleteQRCode(event.target.dataset.id))
 
 const $saveChanges = document.getElementById('savechanges')
 $saveChanges.addEventListener('click', (event) => updateQRData(event.target.dataset.id))
