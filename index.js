@@ -57,6 +57,12 @@ app.get('/qrcards', (req, res) => {
     .catch((err) => res.status(500).json({error: 'Error in creating QR card.'}))
 })
 
+app.delete('/deleteqr/:id', (req, res) => {
+  console.log(req.params.id)
+  console.log(req.body)
+  res.status(200)
+})
+
 app.listen('3000', () => {
   console.log('Listening on 3000.')
 })

@@ -100,7 +100,18 @@ function updateQRData(id) {
 }
 
 function deleteQRCode(id) {
-  console.log()
+  const qrCodeId = {id}
+  console.log(qrCodeId)
+  fetch('/deleteqr/' + id, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(qrCodeId)
+  })
+    .then(res => res.json())
+    .then((data) => updateQRCardRow())
+    .catch((res) => console.log(res))
 }
 
 const $deleteQR = document.getElementById('delete-qr')
