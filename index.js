@@ -58,9 +58,13 @@ app.get('/qrcards', (req, res) => {
 })
 
 app.delete('/deleteqr/:id', (req, res) => {
-  console.log(req.params.id)
-  console.log(req.body)
-  res.status(200)
+  const query = knex('qrcodes')
+    .where('id', '=', req.params.id)
+    .del()
+
+  query
+    .then((data) => res.json(data))
+    .catch((err) => console.log(err))
 })
 
 app.listen('3000', () => {

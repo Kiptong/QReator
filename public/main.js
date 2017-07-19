@@ -110,7 +110,7 @@ function deleteQRCode(id) {
     body: JSON.stringify(qrCodeId)
   })
     .then(res => res.json())
-    .then((data) => updateQRCardRow())
+    .then((data) => console.log('deleted'))
     .catch((res) => console.log(res))
 }
 
