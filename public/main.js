@@ -7,11 +7,11 @@ function qreator() {
     .then(res => res.json())
     .then(data => {
       const $cardRow = document.getElementById('cardrow')
-      data.forEach((data) => $cardRow.appendChild(createCard(data)))
       if (data.length > 0) {
         const $cardHeader = document.getElementById('cardheader')
         $cardHeader.classList.remove('hidden')
       }
+      data.forEach((data) => $cardRow.appendChild(createCard(data)))
     })
     .catch((err) => console.log(err))
 }
@@ -21,9 +21,11 @@ function updateQRCardRow() {
   const $createQrView = document.getElementById('createqrcode')
   const $editQrView = document.getElementById('editqrcode')
   const $qreatorHeader = document.getElementById('qreatorheader')
+  const $cardheader = document.getElementById('cardheader')
 
   $qreatorHeader.textContent = 'Create Your Custom QR Code'
 
+  $cardheader.setAttribute('class', 'hidden')
   $editQrView.setAttribute('class', 'hidden')
   $createQrView.removeAttribute('class', 'hidden')
 
@@ -95,13 +97,14 @@ function updateQRData(id) {
     body: JSON.stringify(qrUpdate)
   })
     .then(res => res.json())
-    .then((data) => updateQRCardRow())
+    .then((data) => {
+      updateQRCardRow()
+    })
     .catch((res) => console.log(res))
 }
 
 function deleteQRCode(id) {
   const qrCodeId = {id}
-  console.log(qrCodeId)
   fetch('/deleteqr/' + id, {
     method: 'DELETE',
     headers: {
@@ -110,7 +113,9 @@ function deleteQRCode(id) {
     body: JSON.stringify(qrCodeId)
   })
     .then(res => res.json())
-    .then((data) => console.log('deleted'))
+    .then((data) => {
+      updateQRCardRow()
+    })
     .catch((res) => console.log(res))
 }
 
@@ -142,8 +147,7 @@ qrButton.addEventListener('click', () => {
         $cardHeader.classList.remove('hidden')
         const qr = document.getElementById('picture')
         qr.setAttribute('src', data.qr)
-        const $cardRow = document.getElementById('cardrow')
-        $cardRow.appendChild(createCard(data))
+        updateQRCardRow()
       })
     .catch((res) => console.log(res))
 })

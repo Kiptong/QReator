@@ -23,10 +23,9 @@ app.post('/generate', (req, res) => {
       .insert(qrCode)
       .into('qrcodes')
 
-    query.then(() => console.log('done!'))
+    query
+      .then(() => res.json(qrCode))
       .catch((err) => console.log(err))
-
-    res.json(qrCode)
   })
 })
 
