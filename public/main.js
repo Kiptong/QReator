@@ -1,15 +1,13 @@
 const qrButton = document.getElementById('createqr')
 
-window.onload = qreator()
+window.onload = () => qreator()
 
 function qreator() {
   fetch('/qrcards')
     .then(res => res.json())
     .then(data => {
       const $cardRow = document.getElementById('cardrow')
-      data.forEach((data) => {
-        $cardRow.appendChild(createCard(data))
-      })
+      data.forEach((data) => $cardRow.appendChild(createCard(data)))
       if (data.length > 0) {
         const $cardHeader = document.getElementById('cardheader')
         $cardHeader.classList.remove('hidden')
@@ -18,7 +16,7 @@ function qreator() {
     .catch((err) => console.log(err))
 }
 
-function updateCard() {
+function updateQRCardRow() {
   const $cardRow = document.getElementById('cardrow')
   const $createQrView = document.getElementById('createqrcode')
   const $editQrView = document.getElementById('editqrcode')
@@ -58,9 +56,9 @@ function editQr(data) {
   const $qreatorHeader = document.getElementById('qreatorheader')
   const $createQrView = document.getElementById('createqrcode')
   const $editQrView = document.getElementById('editqrcode')
-  const $updatedqrurl = document.getElementById('updatedqrurl')
-  const $updatedqrname = document.getElementById('updatedqrname')
-  const $updatedqrdescrip = document.getElementById('updatedqrdescrip')
+  const $updatedqrurl = document.getElementById('updated-qr-url')
+  const $updatedqrname = document.getElementById('updated-qr-name')
+  const $updatedqrdescrip = document.getElementById('updated-qr-description')
   const $qrEditView = document.getElementById('qreditview')
   const $saveChanges = document.getElementById('savechanges')
 
@@ -77,9 +75,9 @@ function editQr(data) {
 }
 
 function updateQRData(id) {
-  const urlInput = document.getElementById('updatedqrurl')
-  const nameInput = document.getElementById('updatedqrname')
-  const descripInput = document.getElementById('updatedqrdescrip')
+  const urlInput = document.getElementById('updated-qr-url')
+  const nameInput = document.getElementById('updated-qr-name')
+  const descripInput = document.getElementById('updated-qr-description')
 
   const qrUpdate = {
     url: urlInput.value,
@@ -95,9 +93,7 @@ function updateQRData(id) {
     body: JSON.stringify(qrUpdate)
   })
     .then(res => res.json())
-      .then((data) => {
-        updateCard()
-      })
+    .then((data) => updateQRCardRow())
     .catch((res) => console.log(res))
 }
 
@@ -105,9 +101,9 @@ const $saveChanges = document.getElementById('savechanges')
 $saveChanges.addEventListener('click', (event) => updateQRData(event.target.dataset.id))
 
 qrButton.addEventListener('click', () => {
-  const urlInput = document.getElementById('qrurlinput').value
-  const nameInput = document.getElementById('qrnameinput').value
-  const descripInput = document.getElementById('qrdescripinput').value
+  const urlInput = document.getElementById('qr-url-input').value
+  const nameInput = document.getElementById('qr-name-input').value
+  const descripInput = document.getElementById('qr-description-input').value
   const qrCode = {
     url: urlInput,
     name: nameInput,
