@@ -100,7 +100,7 @@ function updateQRData(id) {
 }
 
 function deleteQRCode(id) {
-  console.log(id)
+  console.log()
 }
 
 const $deleteQR = document.getElementById('delete-qr')
