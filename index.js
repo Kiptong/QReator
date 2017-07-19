@@ -13,9 +13,11 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.json())
 
 app.post('/generate', (req, res) => {
-  QRcode.toDataURL(req.body.url, {scale: 25}, (err, url) => {
+  const qrCode = req.body
+
+  QRcode.toDataURL(qrCode.url, {scale: 25}, (err, url) => {
     if (err) throw console.error(err)
-    const qrCode = req.body
+
     qrCode.qr = url
     const query = knex
       .insert(qrCode)
@@ -25,6 +27,25 @@ app.post('/generate', (req, res) => {
       .catch((err) => console.log(err))
 
     res.json(qrCode)
+  })
+})
+
+app.put('/qrcards/:id', (req, res) => {
+  const qrCode = req.body
+
+  QRcode.toDataURL(qrCode.url, {scale: 25}, (err, url) => {
+    if (err) throw console.error(err)
+
+    qrCode.qr = url
+
+    const query = knex('qrcodes')
+      .where('id', '=', req.params.id)
+      .update(qrCode)
+      .returning('*')
+
+    query
+      .then((data) => res.json(data))
+      .catch((err) => console.log(err))
   })
 })
 
