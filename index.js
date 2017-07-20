@@ -44,7 +44,7 @@ app.put('/qrcards/:id', (req, res) => {
       .returning('*')
 
     query
-      .then((data) => console.log(res.json(data)))
+      .then((data) => res.json(data))
       .catch((err) => console.log(err))
   })
 })
@@ -63,7 +63,7 @@ app.delete('/qrcards/:id', (req, res) => {
     .del()
 
   query
-    .then((data) => res.json(data))
+    .then(() => res.sendStatus(200))
     .catch((err) => console.log(err))
 })
 
