@@ -7,11 +7,11 @@ function qreator() {
     .then(res => res.json())
     .then(data => {
       const $cardRow = document.getElementById('cardrow')
-      data.forEach((data) => $cardRow.appendChild(createCard(data)))
       if (data.length > 0) {
         const $cardHeader = document.getElementById('cardheader')
         $cardHeader.classList.remove('hidden')
       }
+      data.forEach((data) => $cardRow.appendChild(createCard(data)))
     })
     .catch((err) => console.log(err))
 }
@@ -21,9 +21,11 @@ function updateQRCardRow() {
   const $createQrView = document.getElementById('createqrcode')
   const $editQrView = document.getElementById('editqrcode')
   const $qreatorHeader = document.getElementById('qreatorheader')
+  const $cardheader = document.getElementById('cardheader')
 
   $qreatorHeader.textContent = 'Create Your Custom QR Code'
 
+  $cardheader.setAttribute('class', 'hidden')
   $editQrView.setAttribute('class', 'hidden')
   $createQrView.removeAttribute('class', 'hidden')
 
@@ -61,6 +63,7 @@ function editQr(data) {
   const $updatedqrdescrip = document.getElementById('updated-qr-description')
   const $qrEditView = document.getElementById('qreditview')
   const $saveChanges = document.getElementById('savechanges')
+  const $deleteQR = document.getElementById('delete-qr')
 
   $qreatorHeader.textContent = 'Edit QR Code: ' + data.name
 
@@ -72,6 +75,7 @@ function editQr(data) {
   $updatedqrdescrip.value = data.description
 
   $saveChanges.setAttribute('data-id', data.id)
+  $deleteQR.setAttribute('data-id', data.id)
 }
 
 function updateQRData(id) {
@@ -93,9 +97,29 @@ function updateQRData(id) {
     body: JSON.stringify(qrUpdate)
   })
     .then(res => res.json())
-    .then((data) => updateQRCardRow())
+    .then((data) => {
+      updateQRCardRow()
+    })
     .catch((res) => console.log(res))
 }
+
+function deleteQRCode(id) {
+  const qrCodeId = {id}
+  fetch('/qrcards/' + id, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(qrCodeId)
+  })
+    .then(() => {
+      updateQRCardRow()
+    })
+    .catch((res) => console.log(res))
+}
+
+const $deleteQR = document.getElementById('delete-qr')
+$deleteQR.addEventListener('click', (event) => deleteQRCode(event.target.dataset.id))
 
 const $saveChanges = document.getElementById('savechanges')
 $saveChanges.addEventListener('click', (event) => updateQRData(event.target.dataset.id))
@@ -112,18 +136,24 @@ qrButton.addEventListener('click', () => {
   fetch('/generate', {
     method: 'POST',
     headers: {
-      'content-type': 'application/json'
+      'Content-Type': 'application/json'
     },
     body: JSON.stringify(qrCode)
   })
     .then(res => res.json())
       .then(data => {
+        const qrData = data
+        console.log(qrData)
         const $cardHeader = document.getElementById('cardheader')
-        $cardHeader.classList.remove('hidden')
-        const qr = document.getElementById('picture')
-        qr.setAttribute('src', data.qr)
         const $cardRow = document.getElementById('cardrow')
-        $cardRow.appendChild(createCard(data))
+        const qr = document.getElementById('picture')
+
+        $cardHeader.classList.remove('hidden')
+
+        data.forEach((data) => {
+          qr.setAttribute('src', data.qr)
+          $cardRow.appendChild(createCard(data))
+        })
       })
     .catch((res) => console.log(res))
 })

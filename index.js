@@ -22,11 +22,11 @@ app.post('/generate', (req, res) => {
     const query = knex
       .insert(qrCode)
       .into('qrcodes')
+      .returning('*')
 
-    query.then(() => console.log('done!'))
+    query
+      .then((data) => res.json(data))
       .catch((err) => console.log(err))
-
-    res.json(qrCode)
   })
 })
 
@@ -55,6 +55,16 @@ app.get('/qrcards', (req, res) => {
   cardQuery
     .then((data) => res.json(data))
     .catch((err) => res.status(500).json({error: 'Error in creating QR card.'}))
+})
+
+app.delete('/qrcards/:id', (req, res) => {
+  const query = knex('qrcodes')
+    .where('id', '=', req.params.id)
+    .del()
+
+  query
+    .then(() => res.sendStatus(200))
+    .catch((err) => console.log(err))
 })
 
 app.listen('3000', () => {
