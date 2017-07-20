@@ -6,6 +6,7 @@ const knex = require('knex')({
   client: 'pg',
   connection: 'postgres://localhost:5432/qrcodes'
 })
+const createQRCode = require('./dbgateway')
 
 const app = express()
 
@@ -19,12 +20,7 @@ app.post('/generate', (req, res) => {
     if (err) throw console.error(err)
 
     qrCode.qr = url
-    const query = knex
-      .insert(qrCode)
-      .into('qrcodes')
-      .returning('*')
-
-    query
+    createQRCode(qrCode)
       .then((data) => res.json(data))
       .catch((err) => console.log(err))
   })
