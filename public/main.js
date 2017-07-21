@@ -128,6 +128,7 @@ qrButton.addEventListener('click', () => {
   const urlInput = document.getElementById('qr-url-input').value
   const nameInput = document.getElementById('qr-name-input').value
   const descripInput = document.getElementById('qr-description-input').value
+
   const qrCode = {
     url: urlInput,
     name: nameInput,
@@ -147,6 +148,9 @@ qrButton.addEventListener('click', () => {
         const $cardHeader = document.getElementById('cardheader')
         const $cardRow = document.getElementById('cardrow')
         const qr = document.getElementById('picture')
+        const createQrForm = document.getElementById('createqrform')
+
+        createQrForm.reset()
 
         $cardHeader.classList.remove('hidden')
 
