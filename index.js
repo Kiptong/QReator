@@ -6,6 +6,7 @@ const knex = require('knex')({
   client: 'pg',
   connection: 'postgres://localhost:5432/qrcodes'
 })
+const dbgateway = require('./dbgateway')
 
 const app = express()
 
@@ -19,12 +20,7 @@ app.post('/generate', (req, res) => {
     if (err) throw console.error(err)
 
     qrCode.qr = url
-    const query = knex
-      .insert(qrCode)
-      .into('qrcodes')
-      .returning('*')
-
-    query
+    dbgateway.add(qrCode)
       .then((data) => res.json(data))
       .catch((err) => console.log(err))
   })
@@ -32,37 +28,29 @@ app.post('/generate', (req, res) => {
 
 app.put('/qrcards/:id', (req, res) => {
   const qrCode = req.body
+  const qrCodeID = req.params.id
 
   QRcode.toDataURL(qrCode.url, {scale: 25}, (err, url) => {
     if (err) throw console.error(err)
 
     qrCode.qr = url
 
-    const query = knex('qrcodes')
-      .where('id', '=', req.params.id)
-      .update(qrCode)
-      .returning('*')
-
-    query
+    dbgateway.update(qrCode, qrCodeID)
       .then((data) => res.json(data))
       .catch((err) => console.log(err))
   })
 })
 
 app.get('/qrcards', (req, res) => {
-  const cardQuery = knex.select().table('qrcodes')
-
-  cardQuery
+  dbgateway.readQRTable()
     .then((data) => res.json(data))
     .catch((err) => res.status(500).json({error: 'Error in creating QR card.'}))
 })
 
 app.delete('/qrcards/:id', (req, res) => {
-  const query = knex('qrcodes')
-    .where('id', '=', req.params.id)
-    .del()
+  const qrCodeID = req.params.id
 
-  query
+  dbgateway.delete(qrCodeID)
     .then(() => res.sendStatus(200))
     .catch((err) => console.log(err))
 })
